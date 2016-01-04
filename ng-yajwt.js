@@ -21,8 +21,6 @@
 
         vm.refreshToken = vm.useRefreshTokens ? unconfigured : null;
 
-        return vm;
-
         function unconfigured ()
         {
             console.log ("You should set up a callback for this case in your configuration file.");
@@ -61,7 +59,6 @@
         }
 
         this.$get = ['$q', '$injector', '$rootScope', 'jwtHelper', Interceptor];
-        
         function Interceptor ($q, $injector, $rootScope, jwtHelper)
         {
             return {
