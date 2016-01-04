@@ -83,3 +83,19 @@ function setToken (Auth, token)
     return Auth.setToken(token);
 }
 ````
+
+## Usage
+
+This package will watch all responses for an Authorization header, and assume that to be the next token we pass.
+
+If you don't need to pass a token on certain requests, just say so.
+
+````js
+return $http.get('/public/route', params, { auth : false });
+````
+
+If you're using refresh tokens, we need to know which route you use to do it.
+
+````js
+return $http.post('/auth/refresh', params, { refresh : true });
+````
