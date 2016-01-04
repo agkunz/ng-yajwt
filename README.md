@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Inspired by angular-jwt, something with just a little more control.
+Inspired by angular-jwt.
 
 ## Installation
 
@@ -55,7 +55,9 @@ function refreshToken (Auth)
 {
     console.log ('Refreshing your login token...');
 
+    // we're expecting you to return a promise here
     return Auth.refreshToken();
+    // return $http.post ('/auth/refresh', { auth : false });
 }
 ````
 
@@ -88,14 +90,12 @@ function setToken (Auth, token)
 
 This package will watch all responses for an Authorization header, and assume that to be the next token we pass.
 
-If you don't need to pass a token on certain requests, just say so.
+Some requests don't need valid authorization, such as your token refresh route.
 
 ````js
 return $http.get('/public/route', { auth : false });
 ````
 
-If you're using refresh tokens, we need to know which route you use to do it.
+## Credits
 
-````js
-return $http.post('/auth/refresh', { refresh : true });
-````
+I was using https://github.com/auth0/angular-jwt, but had slightly different requirements.  You are probably better off using that instead.  

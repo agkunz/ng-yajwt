@@ -44,7 +44,7 @@
         {
             if (typeof(Storage) !== "undefined") {
 
-                return localStorage.ngYajwtToken;
+                return localStorage.getItem('ngYajwtToken');
             
             } else {
                 var cookies = document.cookie.split(';');
@@ -92,10 +92,8 @@
                     data : jwtHelper.decodeToken(token),
                 }
 
-                function isRefresh (request) { return (request.data && request.data.refresh); }
-                
                 // if our token is expired, and we aren't already doing a refresh
-                if (decode.expired && !isRefresh(request)) {
+                if (decode.expired) {
                     // if we're using refresh tokens
                     if (vm.useRefreshTokens) {
                         // grab a new token and then try the request again
