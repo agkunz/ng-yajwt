@@ -70,8 +70,10 @@
             function request (request)
             {
                 // if auth is explicityly false, just bail
-                if (request.auth == false) { return request; }
-                
+                if (request.auth === false) { return request; }
+                // if refresh is explicity true, let it through
+                if (request.refresh === true) { return request; }
+
                 // if we think this is for a template, bail
                 if (request.url.substr(request.url.length - 5) == '.html') {
                     return request;
@@ -95,7 +97,7 @@
                 // if our token is expired, and we aren't already doing a refresh
                 if (decode.expired) {
                     // if we're using refresh tokens
-                    if (vm.useRefreshTokens) {
+                    if (vm.useRefreshTokens && !isRefresh(request)) {
                         // grab a new token and then try the request again
                         return refresh(request);
                     } else {
@@ -106,6 +108,8 @@
                     // add the token to the request and send
                     return attachHeader(request, token);
                 }
+
+                function isRefresh (request) { return (request.data && request.data.refresh); }
             }
 
             // our token is expired, try to get a new one before continuing
@@ -119,7 +123,7 @@
                 // when the refresh is done
                 function refreshed (r2)
                 {   // attach the new auth header to the old request
-                    return attachHeader(request, r2.headers('Authorization'));
+                    return attachHeader(request, r2.headers().authorization);
                 }
             }
 
@@ -128,7 +132,7 @@
             {
                 request.headers = request.headers || {};
 
-                request.headers.Authorization = token;
+                request.headers.authorization = token;
                 
                 return request;
             }
@@ -136,7 +140,7 @@
             // watch every response
             function response (response)
             {   // for an auth token
-                var token = response.headers('Authorization');
+                var token = response.headers().authorization;
                 // and if you find one
                 if (token) {    // assume it's for us
                     // fire the supplied set token method to save it
@@ -195,6 +199,7 @@
           }
 
           var decoded = this.urlBase64Decode(parts[1]);
+
           if (!decoded) {
             throw new Error('Cannot decode the token');
           }
