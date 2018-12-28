@@ -1,0 +1,19 @@
+{
+  "name": "ng-yajwt",
+  "version": "1.0.0",
+  "description": "Yet Another JWT Handler",
+  "main": "ng-yajwt.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agkunz/ng-yajwt.git"
+  },
+  "author": "Adam Kunz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agkunz/ng-yajwt/issues"
+  },
+  "homepage": "https://github.com/agkunz/ng-yajwt#readme"
+}
